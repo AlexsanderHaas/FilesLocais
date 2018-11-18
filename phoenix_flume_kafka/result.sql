@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS result2 (
+      uid  VARCHAR NOT NULL PRIMARY KEY,
+        ts TIMESTAMP );

@@ -1,0 +1,58 @@
+CREATE TABLE IF NOT EXISTS json7 (            
+      tipo					    VARCHAR(4)        ,
+      ts_code				    TIMESTAMP NOT NULL,      
+      id_orig_h 	 		    VARCHAR           ,
+      ts           			    DOUBLE   NOT NULL ,
+      uid          			    VARCHAR      	  ,
+          
+	  "key".id_orig_p 	 	    UNSIGNED_LONG,	  
+	  "key".id_resp_h 	 	    VARCHAR,
+	  "key".id_resp_p 	 	    UNSIGNED_LONG,
+	  "key".proto        	    VARCHAR,
+	  "conn".service		    VARCHAR,
+	  "conn".duration    	    UNSIGNED_LONG,
+	  "conn".orig_bytes 	    UNSIGNED_LONG,
+	  "conn".resp_bytes  	    UNSIGNED_LONG,	  
+	  "conn".conn_state	 	    VARCHAR,
+	  "conn".local_orig	 	    BOOLEAN,
+	  "conn".local_resp	 	    BOOLEAN,
+	  "conn".missed_bytes	    UNSIGNED_LONG,
+	  "conn".history		    VARCHAR,
+	  "conn".orig_pkts		    UNSIGNED_LONG,
+	  "conn".orig_ip_bytes	    UNSIGNED_LONG,
+	  "conn".resp_pkts		    UNSIGNED_LONG,
+	  "conn".resp_ip_bytes      UNSIGNED_LONG,
+	  "conn".tunnel_parents     VARCHAR[],
+          
+      "dns".trans_id	        UNSIGNED_LONG,
+      "dns".query  		        VARCHAR,
+      "dns".qclass 			    UNSIGNED_LONG,
+      "dns".qclass_name 	    VARCHAR,
+      "dns".qtype 			    UNSIGNED_LONG,
+      "dns".qtype_name 		    VARCHAR,
+	  "dns".rcode   		    UNSIGNED_LONG,
+	  "dns".rcode_name 		    VARCHAR,
+	  "dns".AA 				    BOOLEAN,
+	  "dns".TC				    BOOLEAN,
+	  "dns".RD				    BOOLEAN,
+	  "dns".RA				    BOOLEAN,
+	  "dns".Z				    UNSIGNED_LONG,
+	  "dns".answers			    VARCHAR[],
+	  "dns".TTLs			    DOUBLE[],
+	  "dns".rejected   		    BOOLEAN,
+
+	  "http".trans_depth  		UNSIGNED_LONG,
+	  "http".version      		VARCHAR,
+	  "http".request_body_len   UNSIGNED_LONG,
+	  "http".response_body_len  UNSIGNED_LONG,
+	  "http".status_code		UNSIGNED_LONG,
+	  "http".status_msg		    VARCHAR,
+	  "http".tags				VARCHAR[],
+	  "http".resp_fuids		    VARCHAR[],
+	  "http".resp_filenames     VARCHAR[],
+	  "http".resp_mime_types    VARCHAR[]
+
+      CONSTRAINT pk PRIMARY KEY (tipo,ts_code ROW_TIMESTAMP,id_orig_h,ts,uid));
+
+--Deixar o tipo por primeiro
+--construir indices por query e ip de saida

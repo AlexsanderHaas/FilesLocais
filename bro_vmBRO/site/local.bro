@@ -109,6 +109,9 @@ redef HTTP::default_capture_password = T;
 @load policy/misc/known-devices
 redef Known::known_devices = {"1.0 min"};
 
+#redef LogAscii::use_json = T; #add em 14-11-18
+#redef LogAscii::json_timestamps = JSON::TS_MILLIS; #add em 18-11-18
+
 # Add 03-06 Alexsander Haas
 #@load module-foo
 @load zcodes/module-full
@@ -139,6 +142,7 @@ redef Known::known_devices = {"1.0 min"};
 @load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka
 redef Kafka::topic_name = "BroLog";
 redef Kafka::tag_json = T;
+redef Kafka::json_timestamps: JSON::TimestampFormat = JSON::TS_MILLIS; #add em 18-11-18
 
 redef Kafka::kafka_conf = table(
     ["metadata.broker.list"] = "flume-kafka:9092"

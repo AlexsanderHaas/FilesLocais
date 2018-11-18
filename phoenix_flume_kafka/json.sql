@@ -1,14 +1,15 @@
-CREATE TABLE IF NOT EXISTS json7 (            
+CREATE TABLE IF NOT EXISTS json9 (            
       tipo					    VARCHAR(4)        ,
       ts_code				    TIMESTAMP NOT NULL,      
       id_orig_h 	 		    VARCHAR           ,
-      ts           			    DOUBLE   NOT NULL ,
+      ts           			    TIMESTAMP NOT NULL,
       uid          			    VARCHAR      	  ,
           
 	  "key".id_orig_p 	 	    UNSIGNED_LONG,	  
 	  "key".id_resp_h 	 	    VARCHAR,
 	  "key".id_resp_p 	 	    UNSIGNED_LONG,
 	  "key".proto        	    VARCHAR,
+
 	  "conn".service		    VARCHAR,
 	  "conn".duration    	    UNSIGNED_LONG,
 	  "conn".orig_bytes 	    UNSIGNED_LONG,
@@ -25,6 +26,7 @@ CREATE TABLE IF NOT EXISTS json7 (
 	  "conn".tunnel_parents     VARCHAR[],
           
       "dns".trans_id	        UNSIGNED_LONG,
+      "dns".rtt 			    DOUBLE,
       "dns".query  		        VARCHAR,
       "dns".qclass 			    UNSIGNED_LONG,
       "dns".qclass_name 	    VARCHAR,
@@ -42,12 +44,25 @@ CREATE TABLE IF NOT EXISTS json7 (
 	  "dns".rejected   		    BOOLEAN,
 
 	  "http".trans_depth  		UNSIGNED_LONG,
+	  "http".method				VARCHAR,
+	  "http".host				VARCHAR,
+	  "http".uri				VARCHAR,
+	  "http".referrer			VARCHAR,  
 	  "http".version      		VARCHAR,
+	  "http".user_agent			VARCHAR,
 	  "http".request_body_len   UNSIGNED_LONG,
 	  "http".response_body_len  UNSIGNED_LONG,
 	  "http".status_code		UNSIGNED_LONG,
 	  "http".status_msg		    VARCHAR,
+	  "http".info_code		    UNSIGNED_LONG,
+	  "http".info_msg			VARCHAR,	 
 	  "http".tags				VARCHAR[],
+	  "http".username			VARCHAR,
+	  "http".password			VARCHAR,
+	  "http".proxied			VARCHAR[],
+	  "http".orig_fuids			VARCHAR[],
+	  "http".orig_filenames		VARCHAR[],
+	  "http".orig_mime_types    VARCHAR[],
 	  "http".resp_fuids		    VARCHAR[],
 	  "http".resp_filenames     VARCHAR[],
 	  "http".resp_mime_types    VARCHAR[]
@@ -56,3 +71,5 @@ CREATE TABLE IF NOT EXISTS json7 (
 
 --Deixar o tipo por primeiro
 --construir indices por query e ip de saida
+--proxied	SERA que esta  certo 
+	

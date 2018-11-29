@@ -1,11 +1,25 @@
 Realizar a captura do tráfego 
+ 
+É necessário definir isso no local, para não precisar declara o -C ao ler no TCDUMP: redef ignore_checksums = T; #add 28-11
 
 sudo tcpdump -i enp0s3 -s 0 -w /home/user/Documentos/tcpdump/mypackets.trace
 
 //com o BRO realiza a LEITURA e executa o script LOCAL que tem a configuração para enviar pro KAFKA
 bro -C -r mypackets.trace local
 
+bro -r mypackets.trace local
+
+bro -r /home/user/Downloads/Friday-WorkingHours.pcap local
 
 https://www.bro.org/sphinx/quickstart/index.html
 
 https://www.bro.org/bro-workshop-2011/solutions/logs/index.html
+
+
+local lv_tmp: time;
+
+    lv_tmp = network_time();
+
+    lv_tmp:bro:type:'time' to an lv_tmp:bro:type:'string'
+
+    c$conn$is_private = lv_tmp;

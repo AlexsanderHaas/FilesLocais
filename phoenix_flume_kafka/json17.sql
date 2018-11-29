@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS json22 (            
+CREATE TABLE IF NOT EXISTS json00 (            
       tipo					    VARCHAR(4)        ,
       ts           			    TIMESTAMP NOT NULL,
       ts_code				    TIMESTAMP NOT NULL,      
@@ -7,15 +7,8 @@ CREATE TABLE IF NOT EXISTS json22 (
 	  id_resp_h 	 	   	    VARCHAR           ,
 	  id_resp_p 	 	   	    UNSIGNED_LONG NOT NULL,
 	  proto        	    	    VARCHAR           ,
-      uid          			    VARCHAR      	  ,
-      ts_double     			VARCHAR      	  ,
-      trans_depth  				UNSIGNED_LONG NOT NULL,
+      uid          			    VARCHAR      	  ,        
       rowid    				    UNSIGNED_LONG NOT NULL,
-
-	  --"key".id_orig_p 	 	    UNSIGNED_LONG,	  
-	  --"key".id_resp_h 	 	    VARCHAR,
-	  --"key".id_resp_p 	 	    UNSIGNED_LONG,
-	  --"key".proto        	    VARCHAR,
 
 	  "conn".service		    VARCHAR,
 	  "conn".duration    	    UNSIGNED_LONG,
@@ -50,7 +43,7 @@ CREATE TABLE IF NOT EXISTS json22 (
 	  "dns".TTLs			    DOUBLE[],
 	  "dns".rejected   		    BOOLEAN,
 
-	  --"http".trans_depth  		UNSIGNED_LONG,
+	  "http".trans_depth  		UNSIGNED_LONG,
 	  "http".method				VARCHAR,
 	  "http".host				VARCHAR,
 	  "http".uri				VARCHAR,
@@ -73,8 +66,7 @@ CREATE TABLE IF NOT EXISTS json22 (
 	  "http".resp_fuids		    VARCHAR[],
 	  "http".resp_filenames     VARCHAR[],
 	  "http".resp_mime_types    VARCHAR[]
-
-	  --(tipo,ts_code ROW_TIMESTAMP,id_orig_h,ts,uid,ts_double));
+	  
       CONSTRAINT pk PRIMARY KEY( tipo		,
 								 ts         ,
 								 ts_code	,
@@ -84,8 +76,6 @@ CREATE TABLE IF NOT EXISTS json22 (
 								 id_resp_p  ,
 								 proto      ,
 								 uid        ,
-								 ts_double  ,
-								 trans_depth,
 								 rowid ));
 
 

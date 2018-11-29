@@ -107,29 +107,20 @@
 redef HTTP::default_capture_password = T;
 
 @load policy/misc/known-devices
-redef Known::known_devices = {"1.0 min"};
-
-# Add 28-11
-@load base/protocols/conn
-
-redef record Conn::Info += {
-    ## Indicate if the originator of the connection is part of the
-    ## "private" address space defined in RFC1918.
-    is_private: string &optional &log;
-};
+#redef Known::known_devices = {"1.0 min"};
+#redef Known::known_devices = {"1.0 min"};
+redef Known::known_devices = {"create_expire::1.0 min"}; #conhecer os hosts #add em 11-11-18
 
 #redef LogAscii::use_json = T; #add em 14-11-18
-#redef LogAscii::json_timestamps = JSON::TS_MILLIS; #add em 18-11-18
 
 # Add 03-06 Alexsander Haas
 #@load module-foo
-#@load zcodes/module-full
-@load zcodes/module-devices
-
-redef ignore_checksums = T; #add 25-11
+#@load zcodes/module-full #removido em 11-11-18
+@load zcodes/module-devices #add em 11-11-18
+redef ignore_checksums = T; #add 28-11
 
 # Add 19-08 Alexsander Haas
-#@load zcodes/file_extraction # Removido 15/11/18
+#@load zcodes/file_extraction  #removido em 11-11-18
 
 # Add 27-04 Alexsander Haas
 
@@ -144,30 +135,18 @@ redef ignore_checksums = T; #add 25-11
 # Add 29/09 Alexsander Haas    APÓS QUALQUER ALTERAÇÃO NOS ARQUIVOS DE CONFIGURAÇÃO DEVE SER EXECUTADO O deploy
 
 #@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka/logs-to-kafka.bro
-#@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka
 #redef Kafka::topic_name = "";
 #redef Kafka::tag_json = T;
 
 # Add 27-04 Alexsander Haas
-#@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka/logs-to-kafka.bro
-@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka
+@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka/logs-to-kafka.bro
 redef Kafka::topic_name = "BroLog";
 redef Kafka::tag_json = T;
-redef Kafka::json_timestamps: JSON::TimestampFormat = JSON::TS_MILLIS;
-#JSON::TS_ISO8601; #add em 18-11-18
+redef Kafka::json_timestamps: JSON::TimestampFormat = JSON::TS_MILLIS; #add em 18-11-18
 
 redef Kafka::kafka_conf = table(
-    ["metadata.broker.list"] = "flume-kafka:9092"
+    ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
 );
-
-#Add 28-11
-event connection_state_remove(c: connection)
-{
-    
-
-    local format: string = "%efg";#"%F, %H:%M:%s";
-    c$conn$is_private = fmt("%s",c$conn$ts); #strftime(format, c$conn$ts);
-}
 
 event bro_init()
 {
@@ -176,7 +155,7 @@ event bro_init()
         $name = "kafka-conn",
         $writer = Log::WRITER_KAFKAWRITER,
         $config = table(
-                ["metadata.broker.list"] = "flume-kafka:9092"
+                ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
         ),
         $path = "conn"
     ];
@@ -188,7 +167,7 @@ event bro_init()
         $name = "kafka-http",
         $writer = Log::WRITER_KAFKAWRITER,
         $config = table(
-                ["metadata.broker.list"] = "flume-kafka:9092"
+                ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
         ),
         $path = "http"
     ];
@@ -200,7 +179,7 @@ event bro_init()
         $name = "kafka-dns",
         $writer = Log::WRITER_KAFKAWRITER,
         $config = table(
-                ["metadata.broker.list"] = "flume-kafka:9092"
+                ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
         ),
         $path = "dns"
     ];

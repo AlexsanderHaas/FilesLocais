@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS json18 (            
+CREATE TABLE IF NOT EXISTS json22 (            
       tipo					    VARCHAR(4)        ,
       ts           			    TIMESTAMP NOT NULL,
       ts_code				    TIMESTAMP NOT NULL,      
@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS json18 (
       uid          			    VARCHAR      	  ,
       ts_double     			VARCHAR      	  ,
       trans_depth  				UNSIGNED_LONG NOT NULL,
+      rowid    				    UNSIGNED_LONG NOT NULL,
 
 	  --"key".id_orig_p 	 	    UNSIGNED_LONG,	  
 	  --"key".id_resp_h 	 	    VARCHAR,
@@ -84,7 +85,8 @@ CREATE TABLE IF NOT EXISTS json18 (
 								 proto      ,
 								 uid        ,
 								 ts_double  ,
-								 trans_depth ));
+								 trans_depth,
+								 rowid ));
 
 
 --Deixar o tipo por primeiro

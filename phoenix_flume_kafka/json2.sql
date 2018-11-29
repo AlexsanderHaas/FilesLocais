@@ -1,10 +1,11 @@
-CREATE TABLE IF NOT EXISTS json9 (            
+CREATE TABLE IF NOT EXISTS json11 (            
+      ts_hb 				    DATE NOT NULL     ,
+      ts           			    TIMESTAMP NOT NULL,            
       tipo					    VARCHAR(4)        ,
-      ts_code				    TIMESTAMP NOT NULL,      
-      id_orig_h 	 		    VARCHAR           ,
-      ts           			    TIMESTAMP NOT NULL,
+      id_orig_h 	 		    VARCHAR           ,      
       uid          			    VARCHAR      	  ,
-          
+
+      "key".ts_code 		    TIMESTAMP,    
 	  "key".id_orig_p 	 	    UNSIGNED_LONG,	  
 	  "key".id_resp_h 	 	    VARCHAR,
 	  "key".id_resp_p 	 	    UNSIGNED_LONG,
@@ -67,7 +68,7 @@ CREATE TABLE IF NOT EXISTS json9 (
 	  "http".resp_filenames     VARCHAR[],
 	  "http".resp_mime_types    VARCHAR[]
 
-      CONSTRAINT pk PRIMARY KEY (tipo,ts_code ROW_TIMESTAMP,id_orig_h,ts,uid));
+      CONSTRAINT pk PRIMARY KEY (ts_hb ROW_TIMESTAMP,ts,tipo,id_orig_h,uid));
 
 --Deixar o tipo por primeiro
 --construir indices por query e ip de saida

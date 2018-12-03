@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS CONN_IP1 (  
+  TS_CODE	    TIMESTAMP NOT NULL,
+  PROTO       VARCHAR,
+  SERVICE     VARCHAR, 
+  ID_ORIG_H   VARCHAR,
+  ID_RESP_H   VARCHAR,
+  
+  ID_ORIG_P   UNSIGNED_LONG,      
+  ID_RESP_P   UNSIGNED_LONG,  
+  DURATION    UNSIGNED_LONG,
+  ORIG_PKTS   UNSIGNED_LONG,
+  ORIG_BYTES  UNSIGNED_LONG,
+  RESP_PKTS   UNSIGNED_LONG,
+  RESP_BYTES  UNSIGNED_LONG,
+	  
+  CONSTRAINT pk PRIMARY KEY( TS_CODE,							               
+							               PROTO  ,
+							               SERVICE,
+                             ID_ORIG_H,
+                             ID_RESP_H ));

@@ -32,10 +32,5 @@ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic BroLog
 
 bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BroLog --from-beginning
 
-{"ts":1542299611.759302,"uid":"C3SubVoOvhrBXMXKb"}
-{"ts":1542299611.759308,"uid":"C3SubVoOvhrBXMXKE"}
-
-RTT
-
-Unable to resolve these column names:
-HOST,METHOD,ORIG_FUIDS,ORIG_MIME_TYPES,REFERRER,URI,USER_AGENT
+Tenta aí CTRL + SHIFT + / (O simbolo que está no numpad)
+Tenta aí CTRL + SHIFT + * (O simbolo que está no numpad)

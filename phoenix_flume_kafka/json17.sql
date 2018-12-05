@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS json00 (
 	  id_resp_p 	 	   	    UNSIGNED_LONG NOT NULL,
 	  proto        	    	    VARCHAR           ,
       uid          			    VARCHAR      	  ,        
-      rowid    				    UNSIGNED_LONG NOT NULL,
+      rowid    				    UNSIGNED_LONG NOT NULL, --USAR row_id
 
 	  "conn".service		    VARCHAR,
 	  "conn".duration    	    UNSIGNED_LONG,

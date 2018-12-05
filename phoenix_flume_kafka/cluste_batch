@@ -6,3 +6,5 @@ batch.jar
 
 Tem de setar os jars utilizados no POM o PHOENIX principalmente e também o CLIENT do PHOENIX:
 phoenix-spark-4.13.1-HBase-1.3.jar,phoenix-4.14.0-HBase-1.2-client.jar \
+
+Descobrir como passar parametros no submit assim não preciso alterar e exportar toda hora

@@ -110,16 +110,8 @@ redef HTTP::default_capture_password = T;
 redef Known::known_devices = {"1.0 min"};
 
 # Add 28-11
-@load base/protocols/conn
-
-redef record Conn::Info += {
-    ## Indicate if the originator of the connection is part of the
-    ## "private" address space defined in RFC1918.
-    is_private: string &optional &log;
-};
-
-#redef LogAscii::use_json = T; #add em 14-11-18
-#redef LogAscii::json_timestamps = JSON::TS_MILLIS; #add em 18-11-18
+#@load zcodes/add_field
+@load zcodes/kafka_producer
 
 # Add 03-06 Alexsander Haas
 #@load module-foo
@@ -127,83 +119,3 @@ redef record Conn::Info += {
 @load zcodes/module-devices
 
 redef ignore_checksums = T; #add 25-11
-
-# Add 19-08 Alexsander Haas
-#@load zcodes/file_extraction # Removido 15/11/18
-
-# Add 27-04 Alexsander Haas
-
-@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka
-#redef Kafka::logs_to_send = set(Conn::LOG);
-#redef Kafka::logs_to_send = set(Full::LOG);
-#redef Kafka::topic_name = "BroLogConn";
-#redef Kafka::kafka_conf = table(
-#    ["metadata.broker.list"] = "flume-kafka:9092"
-#);
-
-# Add 29/09 Alexsander Haas    APÓS QUALQUER ALTERAÇÃO NOS ARQUIVOS DE CONFIGURAÇÃO DEVE SER EXECUTADO O deploy
-
-#@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka/logs-to-kafka.bro
-#@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka
-#redef Kafka::topic_name = "";
-#redef Kafka::tag_json = T;
-
-# Add 27-04 Alexsander Haas
-#@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka/logs-to-kafka.bro
-@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka
-redef Kafka::topic_name = "BroLog";
-redef Kafka::tag_json = T;
-redef Kafka::json_timestamps: JSON::TimestampFormat = JSON::TS_MILLIS;
-#JSON::TS_ISO8601; #add em 18-11-18
-
-redef Kafka::kafka_conf = table(
-    ["metadata.broker.list"] = "flume-kafka:9092"
-);
-
-#Add 28-11
-event connection_state_remove(c: connection)
-{
-    
-
-    local format: string = "%efg";#"%F, %H:%M:%s";
-    c$conn$is_private = fmt("%s",c$conn$ts); #strftime(format, c$conn$ts);
-}
-
-event bro_init()
-{
-    # handles CONN
-    local conn_filter: Log::Filter = [
-        $name = "kafka-conn",
-        $writer = Log::WRITER_KAFKAWRITER,
-        $config = table(
-                ["metadata.broker.list"] = "flume-kafka:9092"
-        ),
-        $path = "conn"
-    ];
-
-    Log::add_filter(Conn::LOG, conn_filter);
-
-    # handles HTTP
-    local http_filter: Log::Filter = [
-        $name = "kafka-http",
-        $writer = Log::WRITER_KAFKAWRITER,
-        $config = table(
-                ["metadata.broker.list"] = "flume-kafka:9092"
-        ),
-        $path = "http"
-    ];
-    
-    Log::add_filter(HTTP::LOG, http_filter);
-
-    # handles DNS       
-    local dns_filter: Log::Filter = [
-        $name = "kafka-dns",
-        $writer = Log::WRITER_KAFKAWRITER,
-        $config = table(
-                ["metadata.broker.list"] = "flume-kafka:9092"
-        ),
-        $path = "dns"
-    ];
-
-    Log::add_filter(DNS::LOG, dns_filter);    
-}

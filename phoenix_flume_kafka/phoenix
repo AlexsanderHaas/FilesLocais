@@ -34,3 +34,5 @@ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BroLog -
 
 Tenta aí CTRL + SHIFT + / (O simbolo que está no numpad)
 Tenta aí CTRL + SHIFT + * (O simbolo que está no numpad)
+
+47452

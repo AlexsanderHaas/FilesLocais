@@ -101,86 +101,51 @@
 # is currently considered a preview and therefore not loaded by default.
 # @load policy/protocols/smb
 
+# Add 15-12-18 Alexsander Haas
+@load base/utils/site
+redef Site::local_nets: set[subnet] = {
+		10.0.0.0/8,
+		192.168.0.0/16,
+		172.16.0.0/12,
+		100.64.0.0/10,  # RFC6598 Carrier Grade NAT
+		127.0.0.0/8,
+		[fe80::]/10,
+		[::1]/128,
+	};
+
 # Add 30-05 Alexsander Haas
 
 @load base/protocols/http
 redef HTTP::default_capture_password = T;
 
+@load policy/protocols/dhcp/known-devices-and-hostnames
 @load policy/misc/known-devices
-#redef Known::known_devices = {"1.0 min"};
-#redef Known::known_devices = {"1.0 min"};
-redef Known::known_devices = {"create_expire::1.0 min"}; #conhecer os hosts #add em 11-11-18
+redef Known::known_devices = {"1.0 min"};
 
-#redef LogAscii::use_json = T; #add em 14-11-18
+@load policy/protocols/http/detect-sqli
+@load policy/protocols/http/detect-webapps
+@load policy/protocols/http/software
+@load policy/protocols/http/software-browser-plugins
+
+@load policy/protocols/dns/auth-addl
+@load policy/protocols/dns/detect-external-names
+
+@load policy/protocols/conn/known-hosts
+@load policy/protocols/conn/known-services
+@load policy/protocols/conn/vlan-logging
+@load policy/protocols/conn/mac-logging
+
+@load policy/protocols/ssh/interesting-hostnames
+@load policy/protocols/ssh/software
+@load policy/protocols/ssh/detect-bruteforcing
+
+# Add 28-11
+#@load zcodes/add_field
+@load zcodes/kafka_producer_cluster
 
 # Add 03-06 Alexsander Haas
 #@load module-foo
-#@load zcodes/module-full #removido em 11-11-18
-@load zcodes/module-devices #add em 11-11-18
+#@load zcodes/module-full
+#@load zcodes/module-devices
 
-# Add 19-08 Alexsander Haas
-#@load zcodes/file_extraction  #removido em 11-11-18
-
-# Add 27-04 Alexsander Haas
-
-@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka
-#redef Kafka::logs_to_send = set(Conn::LOG);
-#redef Kafka::logs_to_send = set(Full::LOG);
-#redef Kafka::topic_name = "BroLogConn";
-#redef Kafka::kafka_conf = table(
-#    ["metadata.broker.list"] = "flume-kafka:9092"
-#);
-
-# Add 29/09 Alexsander Haas    APÓS QUALQUER ALTERAÇÃO NOS ARQUIVOS DE CONFIGURAÇÃO DEVE SER EXECUTADO O deploy
-
-#@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka/logs-to-kafka.bro
-#redef Kafka::topic_name = "";
-#redef Kafka::tag_json = T;
-
-# Add 27-04 Alexsander Haas
-@load /usr/local/bro/lib/bro/plugins/APACHE_KAFKA/scripts/Apache/Kafka/logs-to-kafka.bro
-redef Kafka::topic_name = "BroLog";
-redef Kafka::tag_json = T;
-
-redef Kafka::kafka_conf = table(
-    ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
-);
-
-event bro_init()
-{
-    # handles CONN
-    local conn_filter: Log::Filter = [
-        $name = "kafka-conn",
-        $writer = Log::WRITER_KAFKAWRITER,
-        $config = table(
-                ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
-        ),
-        $path = "conn"
-    ];
-
-    Log::add_filter(Conn::LOG, conn_filter);
-
-    # handles HTTP
-    local http_filter: Log::Filter = [
-        $name = "kafka-http",
-        $writer = Log::WRITER_KAFKAWRITER,
-        $config = table(
-                ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
-        ),
-        $path = "http"
-    ];
-    
-    Log::add_filter(HTTP::LOG, http_filter);
-
-    # handles DNS       
-    local dns_filter: Log::Filter = [
-        $name = "kafka-dns",
-        $writer = Log::WRITER_KAFKAWRITER,
-        $config = table(
-                ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
-        ),
-        $path = "dns"
-    ];
-
-    Log::add_filter(DNS::LOG, dns_filter);    
-}
+redef ignore_checksums = T; #add 25-11

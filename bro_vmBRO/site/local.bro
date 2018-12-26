@@ -101,13 +101,43 @@
 # is currently considered a preview and therefore not loaded by default.
 # @load policy/protocols/smb
 
+# Add 15-12-18 Alexsander Haas
+@load base/utils/site
+redef Site::local_nets: set[subnet] = {
+		10.0.0.0/8,
+		192.168.0.0/16,
+		172.16.0.0/12,
+		100.64.0.0/10,  # RFC6598 Carrier Grade NAT
+		127.0.0.0/8,
+		[fe80::]/10,
+		[::1]/128,
+	};
+
 # Add 30-05 Alexsander Haas
 
 @load base/protocols/http
 redef HTTP::default_capture_password = T;
 
+@load policy/protocols/dhcp/known-devices-and-hostnames
 @load policy/misc/known-devices
 redef Known::known_devices = {"1.0 min"};
+
+@load policy/protocols/http/detect-sqli
+@load policy/protocols/http/detect-webapps
+@load policy/protocols/http/software
+@load policy/protocols/http/software-browser-plugins
+
+@load policy/protocols/dns/auth-addl
+@load policy/protocols/dns/detect-external-names
+
+@load policy/protocols/conn/known-hosts
+@load policy/protocols/conn/known-services
+@load policy/protocols/conn/vlan-logging
+@load policy/protocols/conn/mac-logging
+
+@load policy/protocols/ssh/interesting-hostnames
+@load policy/protocols/ssh/software
+@load policy/protocols/ssh/detect-bruteforcing
 
 # Add 28-11
 #@load zcodes/add_field
@@ -116,6 +146,6 @@ redef Known::known_devices = {"1.0 min"};
 # Add 03-06 Alexsander Haas
 #@load module-foo
 #@load zcodes/module-full
-@load zcodes/module-devices
+#@load zcodes/module-devices
 
 redef ignore_checksums = T; #add 25-11

@@ -20,9 +20,9 @@ event bro_init()
         ),
         $path = "conn"
     ];
-
+ 
     Log::add_filter(Conn::LOG, conn_filter);
-
+ 
     # handles HTTP
     local http_filter: Log::Filter = [
         $name = "kafka-http",
@@ -34,7 +34,7 @@ event bro_init()
     ];
     
     Log::add_filter(HTTP::LOG, http_filter);
-
+ 
     # handles DNS       
     local dns_filter: Log::Filter = [
         $name = "kafka-dns",
@@ -46,4 +46,40 @@ event bro_init()
     ];
 
     Log::add_filter(DNS::LOG, dns_filter);    
+
+    # handles SSH       
+    local ssh_filter: Log::Filter = [
+        $name = "kafka-ssh",
+        $writer = Log::WRITER_KAFKAWRITER,
+        $config = table(
+                ["metadata.broker.list"] = "flume-kafka:9092"
+        ),
+        $path = "ssh"
+    ];
+
+    Log::add_filter(SSH::LOG, ssh_filter);
+
+    # handles DHCP      
+    local dhcp_filter: Log::Filter = [
+        $name = "kafka-dhcp",
+        $writer = Log::WRITER_KAFKAWRITER,
+        $config = table(
+                ["metadata.broker.list"] = "flume-kafka:9092"
+        ),
+        $path = "dhcp"
+    ];
+
+    Log::add_filter(DHCP::LOG, dhcp_filter);
+
+    # handles KNOWN_DEVICES      
+    local devices_filter: Log::Filter = [
+        $name = "kafka-devices",
+        $writer = Log::WRITER_KAFKAWRITER,
+        $config = table(
+                ["metadata.broker.list"] = "flume-kafka:9092"
+        ),
+        $path = "known_devices"
+    ];
+
+    Log::add_filter(Known::DEVICES_LOG, devices_filter);
 }

@@ -45,4 +45,41 @@ event bro_init()
     ];
 
     Log::add_filter(DNS::LOG, dns_filter);    
+
+    # handles SSH       
+    local ssh_filter: Log::Filter = [
+        $name = "kafka-ssh",
+        $writer = Log::WRITER_KAFKAWRITER,
+        $config = table(
+                ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
+        ),
+        $path = "ssh"
+    ];
+
+    Log::add_filter(SSH::LOG, ssh_filter);
+
+    # handles DHCP      
+    local dhcp_filter: Log::Filter = [
+        $name = "kafka-dhcp",
+        $writer = Log::WRITER_KAFKAWRITER,
+        $config = table(
+                ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
+        ),
+        $path = "dhcp"
+    ];
+
+    Log::add_filter(DHCP::LOG, dhcp_filter);
+
+    # handles KNOWN_DEVICES      
+    local devices_filter: Log::Filter = [
+        $name = "kafka-devices",
+        $writer = Log::WRITER_KAFKAWRITER,
+        $config = table(
+                ["metadata.broker.list"] = "namenode.ambari.hadoop:6667"
+        ),
+        $path = "known_devices"
+    ];
+
+    Log::add_filter(Known::DEVICES_LOG, devices_filter);
+
 }

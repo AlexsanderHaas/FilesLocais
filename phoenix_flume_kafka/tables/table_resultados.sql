@@ -1,9 +1,10 @@
-CREATE TABLE IF NOT EXISTS LOG_TOTAIS (  
+CREATE TABLE IF NOT EXISTS LOG_TOTAIS1 (  
   TIPO        VARCHAR,            --Tipo de análise realizada
   TS_FILTRO   TIMESTAMP NOT NULL, --Filtro do TIMESTAMP utilizado na seleção dos dados para análise
-  TS_CODE	    TIMESTAMP NOT NULL, 
+  TS_CODE	    TIMESTAMP NOT NULL, --Data da execução do processamento
   ROW_ID      UNSIGNED_LONG NOT NULL, 
 
+  TS          TIMESTAMP,      --Agrupado por hora 
   COUNT       UNSIGNED_LONG, 
   PROTO       VARCHAR,
   SERVICE     VARCHAR,
@@ -20,7 +21,7 @@ CREATE TABLE IF NOT EXISTS LOG_TOTAIS (
   RESP_IP_BYTES UNSIGNED_LONG,
   RESP_BYTES    UNSIGNED_LONG,
 	  
-  CONSTRAINT pk PRIMARY KEY( TIPO     ,							               
+  CONSTRAINT PK PRIMARY KEY( TIPO     ,							               
 							               TS_FILTRO,
-							               TS_CODE,
+							               TS_CODE  ,
                              ROW_ID ));

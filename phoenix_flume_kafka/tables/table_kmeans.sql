@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS LOG_KMEANS_DDOS (
   ID_RESP_H     VARCHAR,
   ID_ORIG_H     VARCHAR,
   TS_FILTRO     TIMESTAMP     NOT NULL, --Filtro do TIMESTAMP utilizado na seleção dos dados para análise
-  TS_CODE	      TIMESTAMP     NOT NULL, 
+  TS_CODE	      TIMESTAMP     NOT NULL, --Data do processamento
   ROW_ID        UNSIGNED_LONG NOT NULL, 
 
   TS            TIMESTAMP, 

@@ -3,6 +3,7 @@
 --jars spark-streaming-kafka-0-10_2.11-2.2.0.jar,kafka_2.11-0.10.0.1.jar,kafka-clients-1.0.0.jar,spark-streaming_2.11-2.0.1.jar,spark-sql_2.11-2.2.1.jar,phoenix-spark-4.13.1-HBase-1.3.jar,phoenix-4.14.0-HBase-1.2-client.jar \
 --class "integra.cl_salva_log" \
 --master local[2] \
+
 stream.jar
 stream_grp.jar
 

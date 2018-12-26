@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS LOG_TOTAIS1 (  
+CREATE TABLE IF NOT EXISTS LOG_TOTAIS (  
   TIPO        VARCHAR,            --Tipo de análise realizada
   TS_FILTRO   TIMESTAMP NOT NULL, --Filtro do TIMESTAMP utilizado na seleção dos dados para análise
   TS_CODE	    TIMESTAMP NOT NULL, --Data da execução do processamento
